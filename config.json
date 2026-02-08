@@ -1,0 +1,42 @@
+{
+  "webserver": {
+    "host": "192.168.10.183",
+    "port": 8001
+  },
+  "mqttbroker": {
+    "host": "192.168.10.121",
+    "client_id": "main"
+  },  
+  "databases": {
+      "1": {
+        "database": "db1.db"          
+      },
+      "2": {
+          "database": "db2.db"          
+      },
+      "3": {
+        "database": "db3.db"          
+      },
+      "4": {
+      "database": "db4.db"          
+      },
+    "5": {
+    "database": "db5.db"          
+    },
+    "6": {
+      "database": "db6.db"          
+    },
+    "7": {
+        "database": "db7.db"          
+    },
+    "8": {
+      "database": "db8.db"          
+    },
+    "9": {
+    "database": "db9.db"          
+    },
+  "10": {
+  "database": "db10.db"          
+  }                
+  }
+}
