@@ -10,18 +10,20 @@ class MeterDaoSqlite(EntityDaoSqlite):
     async def InitDb(self):
         asyncDbConn = self.dbConn
 
+        await asyncDbConn.execute("DROP TABLE IF EXISTS meter_reading")
         await asyncDbConn.execute(f"DROP TABLE IF EXISTS {self.tableName}")
-        await asyncDbConn.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName}
-            (ID            INTEGER PRIMARY KEY,
+        await asyncDbConn.execute("DROP INDEX IF EXISTS index_meter_code")
+        await asyncDbConn.execute("DROP INDEX IF EXISTS index_meter_id_client_id")
+        await asyncDbConn.execute(f'''CREATE TABLE {self.tableName}
+            (ID            INTEGER PRIMARY KEY AUTOINCREMENT,
             VERSION        INTEGER NOT NULL,
             CLIENT_ID      INTEGER NOT NULL,                                                               
             MESSAGE_ID     TEXT,                                      
             GUID           TEXT    NOT NULL,                    
             CODE           TEXT    NOT NULL,
             DESCRIPTION    TEXT    NOT NULL,         
-            ADR            NUMERIC,                                                                                 
+            ADR            NUMERIC(19, 4),                                                                                 
             IS_PAUSED      BOOLEAN     NOT NULL);''')
-        await asyncDbConn.execute(f"DELETE FROM {self.tableName}")
         await asyncDbConn.commit()
 
     async def AddMeter(self, meter):

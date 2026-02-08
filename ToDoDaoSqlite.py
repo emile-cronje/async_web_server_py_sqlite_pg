@@ -13,8 +13,8 @@ class ToDoDaoSqlite(EntityDaoSqlite):
         await asyncDbConn.execute(f"DROP TABLE IF EXISTS {self.tableName}")
         await asyncDbConn.execute("DROP INDEX IF EXISTS index_todo_item_name")
         await asyncDbConn.execute("DROP INDEX IF EXISTS index_todo_item_id_client_id")
-        await asyncDbConn.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName}
-            (ID            INTEGER PRIMARY KEY,
+        await asyncDbConn.execute(f'''CREATE TABLE {self.tableName}
+            (ID            INTEGER PRIMARY KEY AUTOINCREMENT,
             VERSION        INTEGER NOT NULL,
             CLIENT_ID      INTEGER NOT NULL,
             MESSAGE_ID     TEXT,
@@ -25,7 +25,6 @@ class ToDoDaoSqlite(EntityDaoSqlite):
                     ON {self.tableName}(name)''')
         await asyncDbConn.execute(f'''CREATE UNIQUE INDEX index_todo_item_id_client_id
                     ON {self.tableName}(id, client_id)''')
-        await asyncDbConn.execute(f"DELETE FROM {self.tableName}")
 
         await asyncDbConn.commit()
 

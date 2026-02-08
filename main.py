@@ -55,7 +55,7 @@ class WebServer:
         self.useQ = True
 
     async def InitDao(self, app):
-        dbIsPg = True
+        dbIsPg = False
 
         if (dbIsPg == True):
             self.toDoDao = ToDoDaoPgSql()        

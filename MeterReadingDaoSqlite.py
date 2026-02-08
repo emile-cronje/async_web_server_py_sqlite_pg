@@ -12,8 +12,8 @@ class MeterReadingDaoSqlite(EntityDaoSqlite):
         asyncDbConn = self.dbConn
 
         await asyncDbConn.execute(f"DROP TABLE IF EXISTS {self.tableName}")
-        await asyncDbConn.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName}
-                (ID            INTEGER PRIMARY KEY,
+        await asyncDbConn.execute(f'''CREATE TABLE {self.tableName}
+                (ID            INTEGER PRIMARY KEY AUTOINCREMENT,
                 VERSION        INTEGER NOT NULL,
             CLIENT_ID      INTEGER NOT NULL,                                                               
             MESSAGE_ID     TEXT,                                                                                                                  
@@ -21,7 +21,6 @@ class MeterReadingDaoSqlite(EntityDaoSqlite):
             READING        DECIMAL,
             READING_ON     TIMESTAMP,
             CONSTRAINT fk_meter FOREIGN KEY(METER_ID) REFERENCES meter(ID));''')
-        await asyncDbConn.execute(f"DELETE FROM {self.tableName}")
 
         await asyncDbConn.commit()
 

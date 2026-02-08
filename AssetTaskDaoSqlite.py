@@ -13,8 +13,8 @@ class AssetTaskDaoSqlite(EntityDaoSqlite):
         await asyncDbConn.execute(f"DROP TABLE IF EXISTS {self.tableName}")
         await asyncDbConn.execute("DROP INDEX IF EXISTS index_asset_task_code")
         await asyncDbConn.execute("DROP INDEX IF EXISTS index_asset_task_id_client_id")
-        await asyncDbConn.execute(f'''CREATE TABLE IF NOT EXISTS {self.tableName}
-            (ID            INTEGER PRIMARY KEY,
+        await asyncDbConn.execute(f'''CREATE TABLE {self.tableName}
+            (ID            INTEGER PRIMARY KEY AUTOINCREMENT,
             ASSET_ID       INTEGER NOT NULL,                                       
             VERSION        INTEGER NOT NULL,
             CLIENT_ID      INTEGER NOT NULL,
@@ -26,7 +26,6 @@ class AssetTaskDaoSqlite(EntityDaoSqlite):
                     ON {self.tableName}(code)''')
         await asyncDbConn.execute(f'''CREATE UNIQUE INDEX index_asset_task_id_client_id
                     ON {self.tableName}(id, client_id)''')
-        await asyncDbConn.execute(f"DELETE FROM {self.tableName}")
 
         await asyncDbConn.commit()
 
